@@ -12,7 +12,7 @@ On calling the *generateHTML* method we will get an HTML generated for the JSON 
 
 #### The template is as follows *{{JSONProperty}}* for flat objects and for iteratables *{{JSONProperty[#].ChildProperty}}*
 
-we can overide both the patterns using *setIterationIdentifer* and *setTemplatePattern* respectively 
+,we can overide both the patterns using *setIterationIdentifer* and *setTemplatePattern* respectively 
 
 ## Example
 There is an sample template and JSON , to generate sample template just run 
