@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h1>{{information}}</h1>
+
+<h2>HTML Table</h2>
+
+<table style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;border-block-color:red;">
+  <tr style="background-color: skyblue;">
+    <td><b>Name</b></td>
+    <td><b>CEO</b></td>
+    <td><b>Country</b></td>
+  </tr>
+  <tr>
+  	<td>{{company[#].Name}}</td>
+    <td>{{company[#].CEO}}</td>
+    <td>{{company[#].Country}}</td>
+  </tr>
+</table>
+
+<h2>HTML List</h2>
+<div style="width: 45%;float: left;">
+  <h3>Un-ordered list</h3>
+  <ul>
+      <li>{{company[#].Name}}</li>
+      <li>{{company[#].CEO}}</li>
+      <li>{{company[#].Country}}</li>
+  </ul>
+</div>
+<div style="width: 45%;float: left;">
+<h3>Ordered list</h3>
+  <ol>
+      <li>{{company[#].Name}}</li>
+      <li>{{company[#].CEO}}</li>
+      <li>{{company[#].Country}}</li>
+  </ol>  
+</div>
+<br>
+<h3>{{signature}}</h3>
+</body>
+</html>

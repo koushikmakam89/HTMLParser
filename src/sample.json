@@ -1,0 +1,20 @@
+{
+    "company":[
+    {
+        "name":"vmWare",
+        "country":"USA",
+        "ceo":"Pat"
+    },
+    {
+        "name":"Google",
+        "country":"USA",
+        "ceo":"Sundar"
+    },
+    {
+        "name":"Microsoft",
+        "country":"USA",
+        "ceo":"Satya"
+    }],
+    "information":"This is an example for HTML itration",
+    "signature":"Designed by Koushik A Makam"
+}
