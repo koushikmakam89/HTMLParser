@@ -5,12 +5,12 @@ It builds HTML for an given JSON data and HTML template
 
 We need to provide the HTML Parser two inputs
 * HTML template
-* JOSN data
+* JSON data
     , on init
 
 On calling the *generateHTML* method we will get an HTML generated for the JSON data provided
 
-#### The template is as follows *{{JSONProperty}}* for flat objects and for iteratables **{{JSONProperty[#].ChildProperty}}
+#### The template is as follows *{{JSONProperty}}* for flat objects and for iteratables *{{JSONProperty[#].ChildProperty}}*
 
 we can overide both the patterns *setIterationIdentifer* and *setTemplatePattern* respectively 
 
