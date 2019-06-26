@@ -7,20 +7,24 @@ class HTMLParser():
     Method to parse HTML template with JSON data 
     """
     
-    _iterationIdentifer='[#].'
+    _iterationIdentifer='[#]'
+    _childObjectFinder='.'
     _templatePrefix='{{'
     _templateSufix='}}'
 
     def __init__(self,htmltemplate,jsonData):
         self.data = jsonData
         self.template = htmltemplate
-    
+
+    def getIterater(self):
+        return self._iterationIdentifer + self._childObjectFinder
+
     def _getParentName(self,htmlValue):
-        val = htmlValue.split(self._iterationIdentifer)[0]
+        val = htmlValue.split(self.getIterater())[0]
         return val.lstrip(self._templatePrefix).lower()
     
     def _getChildName(self,htmlValue):
-        val = htmlValue.split(self._iterationIdentifer)[-1]
+        val = htmlValue.split(self.getIterater())[-1]
         return val.rstrip(self._templateSufix).lower()
 
     def _replaceRowData(self,rowInformation,jsonArrayName,htmlElementsList):
@@ -54,7 +58,7 @@ class HTMLParser():
             tr_elements = table_element.xpath('//tr')
             for r in tr_elements:
                 row = r.text_content()
-                if row.find(self._iterationIdentifer) > -1:
+                if row.find(self.getIterater()) > -1:
                     #we have data to iterate
                     thingToReplace = etree.tostring(r).decode()
                     row_element = lh.fromstring(thingToReplace)
@@ -89,7 +93,7 @@ class HTMLParser():
         doc = lh.fromstring(content)
         list_elements = doc.xpath(elementSelector)
         for l in list_elements:
-            if l.text_content().find(self._iterationIdentifer) > -1:
+            if l.text_content().find(self.getIterater()) > -1:
                 thingToReplace = etree.tostring(l).decode()
                 list_element = lh.fromstring(thingToReplace)
                 li_elements = list_element.xpath('//li')
@@ -104,7 +108,7 @@ class HTMLParser():
 
         return modifiedData
 
-    def _addFlatData(self,content):
+    def _addFlatData(self,content,jsonData,root=''):
         """
 
         Method to replace data from all flat records
@@ -116,12 +120,19 @@ class HTMLParser():
             The HTML template replace with all flat JSON data
 
         """
-        for key in self.data.keys():
-            if type(self.data[key] != "list"):
-                htmlValue=self._templatePrefix+key+self._templateSufix
-                content = content.replace(htmlValue,str(self.data[key]))
+        def replaceContent(content, data , key):
+            mykey = key if root == '' else root + self._childObjectFinder + key
+            htmlValue = self._templatePrefix + mykey + self._templateSufix
+            content = content.replace(htmlValue,str(data[key]))
+            return content
+        
+        if isinstance(jsonData, dict):
+            for key in jsonData.keys():
+                if isinstance(jsonData[key], dict):
+                    content = self._addFlatData(content,jsonData[key],key)
+                elif not isinstance(jsonData[key], list) :
+                    content = replaceContent(content,jsonData,key)
         return content
-
 
 
     def generateHTML(self):
@@ -141,10 +152,10 @@ class HTMLParser():
         htmlContent = self._addRecordsToTable(self.template)
         htmlContent = self._addRecordsToList(htmlContent,'//ul')
         htmlContent = self._addRecordsToList(htmlContent,'//ol')
-        htmlContent = self._addFlatData(htmlContent)
+        htmlContent = self._addFlatData(htmlContent, self.data)
         return htmlContent
     
-def setIterationIdentifer(self, iterationIdentifer='[#].'):
+def setIterationIdentifer(self, iterationIdentifer='[#]'):
     """
         Method to set the itearion identifer
 
@@ -152,7 +163,7 @@ def setIterationIdentifer(self, iterationIdentifer='[#].'):
             New identifier value
 
         Default 
-        Iteration Identifer =  '[#].'
+        Iteration Identifer =  '[#]'
     """
 
     self._iterationIdentifer = iterationIdentifer

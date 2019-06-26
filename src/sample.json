@@ -16,5 +16,8 @@
         "ceo":"Satya"
     }],
     "information":"This is an example for HTML itration",
-    "signature":"Designed by Koushik A Makam"
+    "signature":{
+        "footer":"Designed by :",
+        "signature":"Koushik A Makam"
+    }
 }
