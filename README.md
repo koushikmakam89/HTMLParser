@@ -10,9 +10,9 @@ We need to provide the HTML Parser two inputs
 
 On calling the *generateHTML* method we will get an HTML generated for the JSON data provided
 
-#### The template is as follows *{{JSONProperty}}* for flat objects and for iteratables *{{JSONProperty[#].ChildProperty}}*
+#### The template is as follows *{{JSONProperty}}* for flat objects and for iteratables *{{JSONProperty[#].ChildProperty}} and *{{JSONProperty[$].ChildProperty}} for grouping table data*
 
-,we can overide both the patterns using *setIterationIdentifer* and *setTemplatePattern* respectively 
+,we can overide both the patterns using *setIterationIdentifer* , *setTemplatePattern* and *setGroupIdentifer* respectively 
 
 ## Example
 There is an sample template and JSON , to generate sample template just run 

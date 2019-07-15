@@ -27,5 +27,7 @@ if __name__== "__main__":
     dbData = json_reader.get_json_data()
 
     outputHTML = HTMLParser(content,dbData).generateHTML()
-
-    print(outputHTML)
+    
+    htmlResultFilePath = os.path.join(curr_path, 'result.html')
+    with open(htmlResultFilePath, 'w') as content_file:
+        content_file.write(outputHTML)

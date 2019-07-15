@@ -8,6 +8,7 @@ class HTMLParser():
     """
     
     _iterationIdentifer='[#]'
+    _groupIdentifer='[$]'
     _childObjectFinder='.'
     _templatePrefix='{{'
     _templateSufix='}}'
@@ -27,13 +28,23 @@ class HTMLParser():
         val = htmlValue.split(self.getIterater())[-1]
         return val.rstrip(self._templateSufix).lower()
 
-    def _replaceRowData(self,rowInformation,jsonArrayName,htmlElementsList):
+    def _replaceRowData(self,rowInformation,jsonArrayName,htmlElementsList,sortOrder = []):
+        def sort(json):
+            if len(sortOrder) > 0:
+                for item in sortOrder:
+                    newlist = sorted(json, key=lambda record: record[item], reverse=True)
+                return newlist
+            return json
+
         popupaledRow = ""
         if jsonArrayName in self.data:
-            for data in self.data[jsonArrayName]:
+            json = self.data[jsonArrayName]
+            json = sort(json)
+            for data in json:
                 rowData = rowInformation
                 for element in htmlElementsList:
-                    rowData = rowData.replace(element,data[self._getChildName(element)])
+                    selectorElement = element.replace(self._groupIdentifer,self._iterationIdentifer)
+                    rowData = rowData.replace(element,data[self._getChildName(selectorElement)])
                 popupaledRow = popupaledRow  + rowData
         return popupaledRow
 
@@ -49,8 +60,8 @@ class HTMLParser():
             The HTML template with tables replace with JSON data
 
         """
-        modifiedData = content
         doc = lh.fromstring(content)
+        modifiedData = etree.tostring(doc).decode()
         table_elements = doc.xpath('//table')
         for t in table_elements:
             #print(etree.tostring(t))
@@ -63,15 +74,41 @@ class HTMLParser():
                     thingToReplace = etree.tostring(r).decode()
                     row_element = lh.fromstring(thingToReplace)
                     td_element = row_element.xpath('//td')
-                    td_data = []
                     
-                    for d in td_element:
-                        td_data.append(d.text_content())
+                    # table flow records
+                    td_data = []
+                    groupIndex=[]
+                    sortOrder = []
 
-                    modifiedData = modifiedData.replace(thingToReplace,
-                        self._replaceRowData(thingToReplace,
-                            self._getParentName(htmlValue = td_data[0] if len(td_data)>0 else ''),
-                            td_data))
+                    index = 0
+                    for d in td_element:
+                        content = d.text_content()
+                        if content.find(self._groupIdentifer)> -1:
+                            groupIndex.append(index)
+                            sortOrder.append(self._getChildName(
+                                content.replace(self._groupIdentifer,self._iterationIdentifer)))
+                        td_data.append(content)
+                        index +=  1
+                    datarows = self._replaceRowData(thingToReplace,
+                            self._getParentName(htmlValue = 
+                                    next(sub for sub in td_data if sub)
+                                    .replace(self._groupIdentifer,self._iterationIdentifer)),
+                            td_data,sortOrder)
+                    
+                    #Code to add rowspans for grouped records
+                    if len(groupIndex) > 0:
+                        row_element = lh.fromstring(datarows).xpath('//tr')
+                        td_element = lh.fromstring(etree.tostring(row_element[0]).decode()).xpath('//td')
+                        for index in groupIndex:
+                            element = td_element[index]
+                            oldRecord = etree.tostring(element).decode()
+                            counter = datarows.count(element.text_content())
+                            td_element[index].set("rowspan",str(counter))
+                            newRecord = etree.tostring(element).decode()
+                            datarows = datarows.replace(oldRecord,newRecord,1)
+                            datarows = datarows.replace(oldRecord,'')
+
+                    modifiedData = modifiedData.replace(thingToReplace, datarows)
     
         return modifiedData
 
@@ -99,7 +136,7 @@ class HTMLParser():
                 li_elements = list_element.xpath('//li')
                 li_data = []
                 for d in li_elements:
-                        li_data.append(d.text_content())
+                    li_data.append(d.text_content())
                 modifiedData = modifiedData.replace(thingToReplace,
                         self._replaceRowData(thingToReplace,
                             self._getParentName(htmlValue = li_data[0] if len(li_data)>0 else ''),
@@ -167,6 +204,19 @@ def setIterationIdentifer(self, iterationIdentifer='[#]'):
     """
 
     self._iterationIdentifer = iterationIdentifer
+
+def setGroupIdentifer(self, groupIdentifer='[#]'):
+    """
+        Method to set the group-by identifer
+
+        Args
+            New identifier value
+
+        Default 
+        Iteration Identifer =  '[#]'
+    """
+
+    self._groupIdentifer = groupIdentifer
 
 def setTemplatePattern(self,prefix='{{',sufix='}}'):
     """

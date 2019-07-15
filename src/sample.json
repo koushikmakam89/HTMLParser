@@ -14,6 +14,11 @@
         "name":"Microsoft",
         "country":"USA",
         "ceo":"Satya"
+    },
+    {
+        "name":"vmWare",
+        "country":"Bangalore",
+        "ceo":"Pat"
     }],
     "information":"This is an example for HTML itration",
     "signature":{
