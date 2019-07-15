@@ -98,8 +98,8 @@ class HTMLParser():
                     #Code to add rowspans for grouped records
                     if len(groupIndex) > 0:
                         row_element = lh.fromstring(datarows).xpath('//tr')
-                        td_element = lh.fromstring(etree.tostring(row_element[0]).decode()).xpath('//td')
                         for index in groupIndex:
+                            td_element = lh.fromstring(etree.tostring(row_element[index]).decode()).xpath('//td')
                             element = td_element[index]
                             oldRecord = etree.tostring(element).decode()
                             counter = datarows.count(element.text_content())

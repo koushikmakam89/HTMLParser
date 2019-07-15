@@ -21,6 +21,7 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
 </style>
 </head>
 <body>
@@ -36,24 +37,24 @@ tr:nth-child(even) {
     <td><b>Country</b></td>
   </tr>
   <tr>
-  	<td>{{company[#].Name}}</td>
+    <td>{{company[#].Name}}</td>
     <td>{{company[#].CEO}}</td>
     <td>{{company[#].Country}}</td>
   </tr>
 </table>
 
 <h2>HTML Table with Group by</h2>
-<table style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;border-block-color:red;">
+<table style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">
   <tbody>
     <tr>
       <td>Name</td>
-      <td>CEO</td>
+      <td>Continent</td>
       <td>Country</td>
     </tr>
     <tr>
-      <td>{{company[$].name}}</td>
-      <td>{{company[#].ceo}}</td>
-      <td>{{company[#].country}}</td>
+      <td>{{vmware[$].name}}</td>
+      <td>{{vmware[$].continent}}</td>
+      <td>{{vmware[#].country}}</td>
     </tr>
   </tbody>
 </table>
@@ -82,3 +83,4 @@ tr:nth-child(even) {
 <h4>{{signature.signature}}</h4>
 </body>
 </html>
+

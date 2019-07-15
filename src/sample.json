@@ -14,12 +14,28 @@
         "name":"Microsoft",
         "country":"USA",
         "ceo":"Satya"
-    },
-    {
-        "name":"vmWare",
-        "country":"Bangalore",
-        "ceo":"Pat"
     }],
+    "vmware":[
+        {
+            "name":"vmWare",
+            "continent":"North America",
+            "country":"USA"
+        },
+        {
+            "name":"vmWare",
+            "continent":"Asia",
+            "country":"India"
+        },
+        {
+            "name":"vmWare",
+            "continent":"Asia",
+            "country":"China"
+        },
+        {
+            "name":"vmWare",
+            "continent":"Asia",
+            "country":"Janpan"
+        }],
     "information":"This is an example for HTML itration",
     "signature":{
         "footer":"Designed by :",
