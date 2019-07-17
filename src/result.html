@@ -17,9 +17,9 @@ td, th {
   padding: 8px;
 }
 
-tr:nth-child(even) {
+/* tr:nth-child(even) {
   background-color: #dddddd;
-}
+} */
 
 </style>
 </head>
@@ -29,28 +29,6 @@ tr:nth-child(even) {
 
 <h2>HTML Table</h2>
 
-<table style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;border-block-color:red;">
-  <tr style="background-color: skyblue;">
-    <td><b>Name</b></td>
-    <td><b>CEO</b></td>
-    <td><b>Country</b></td>
-  </tr>
-  <tr>
-  &#160;&#160;<td>vmWare</td>
-    <td>Pat</td>
-    <td>USA</td>
-  </tr>
-<tr>
-  &#160;&#160;<td>Google</td>
-    <td>Sundar</td>
-    <td>USA</td>
-  </tr>
-<tr>
-  &#160;&#160;<td>Microsoft</td>
-    <td>Satya</td>
-    <td>USA</td>
-  </tr>
-</table>
 
 <h2>HTML Table with Group by</h2>
 <table style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">
@@ -59,66 +37,22 @@ tr:nth-child(even) {
       <td>Name</td>
       <td>Continent</td>
       <td>Country</td>
+      <td>Comments</td>
     </tr>
-    <tr>
-      <td rowspan="4">vmWare</td>
-      <td>North America</td>
+    <tr class="None" style="None"><td rowspan="5">vmWare</td>
+      </tr><tr class="None" style="None"><td rowspan="1">North America</td>
       <td>USA</td>
-    </tr>
-  <tr>
-      <td rowspan="3">Asia</td>
-      <td>India</td>
-    </tr>
-  <tr>
+      <td>comment</td>
+    </tr><tr class="None" style="None"><td rowspan="4">Asia</td>
       <td>China</td>
-    </tr>
-  <tr>
-      <td>Janpan</td>
-    </tr>
-  </tbody>
+      <td>comment</td>
+    </tr><tr class="None" style="None"><td>Japan</td>
+      <td>comment</td>
+    </tr><tr class="None" style="None"><td>Sri Lanka</td>
+      <td>comment</td>
+    </tr></tbody>
 </table>
 
 
-<h2>HTML List</h2>
-<div style="width: 50%;float: left;">
-  <h3>Un-ordered list</h3>
-  <ul>
-      <li>vmWare</li>
-      <li>Pat</li>
-      <li>USA</li>
-  </ul>
-<ul>
-      <li>Google</li>
-      <li>Sundar</li>
-      <li>USA</li>
-  </ul>
-<ul>
-      <li>Microsoft</li>
-      <li>Satya</li>
-      <li>USA</li>
-  </ul>
-</div>
-<div style="width: 45%;float: left;">
-<h3>Ordered list</h3>
-  <ol>
-      <li>vmWare</li>
-      <li>Pat</li>
-      <li>USA</li>
-  </ol>  
-<ol>
-      <li>Google</li>
-      <li>Sundar</li>
-      <li>USA</li>
-  </ol>  
-<ol>
-      <li>Microsoft</li>
-      <li>Satya</li>
-      <li>USA</li>
-  </ol>  
-</div>
-<br/>
-
-<h3>Designed by :</h3>
-<h4>Koushik A Makam</h4>
 </body>
 </html>

@@ -18,9 +18,9 @@ td, th {
   padding: 8px;
 }
 
-tr:nth-child(even) {
+/* tr:nth-child(even) {
   background-color: #dddddd;
-}
+} */
 
 </style>
 </head>
@@ -30,18 +30,6 @@ tr:nth-child(even) {
 
 <h2>HTML Table</h2>
 
-<table style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;border-block-color:red;">
-  <tr style="background-color: skyblue;">
-    <td><b>Name</b></td>
-    <td><b>CEO</b></td>
-    <td><b>Country</b></td>
-  </tr>
-  <tr>
-    <td>{{company[#].Name}}</td>
-    <td>{{company[#].CEO}}</td>
-    <td>{{company[#].Country}}</td>
-  </tr>
-</table>
 
 <h2>HTML Table with Group by</h2>
 <table style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">
@@ -50,37 +38,18 @@ tr:nth-child(even) {
       <td>Name</td>
       <td>Continent</td>
       <td>Country</td>
+      <td>Comments</td>
     </tr>
     <tr>
       <td>{{vmware[$].name}}</td>
       <td>{{vmware[$].continent}}</td>
       <td>{{vmware[#].country}}</td>
+      <td>{{vmware[#].comment}}</td>
     </tr>
   </tbody>
 </table>
 
 
-<h2>HTML List</h2>
-<div style="width: 50%;float: left;">
-  <h3>Un-ordered list</h3>
-  <ul>
-      <li>{{company[#].Name}}</li>
-      <li>{{company[#].CEO}}</li>
-      <li>{{company[#].Country}}</li>
-  </ul>
-</div>
-<div style="width: 45%;float: left;">
-<h3>Ordered list</h3>
-  <ol>
-      <li>{{company[#].Name}}</li>
-      <li>{{company[#].CEO}}</li>
-      <li>{{company[#].Country}}</li>
-  </ol>  
-</div>
-<br>
-
-<h3>{{signature.footer}}</h3>
-<h4>{{signature.signature}}</h4>
 </body>
 </html>
 

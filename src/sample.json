@@ -1,44 +1,56 @@
-{
-    "company":[
-    {
-        "name":"vmWare",
-        "country":"USA",
-        "ceo":"Pat"
-    },
-    {
-        "name":"Google",
-        "country":"USA",
-        "ceo":"Sundar"
-    },
-    {
-        "name":"Microsoft",
-        "country":"USA",
-        "ceo":"Satya"
-    }],
-    "vmware":[
-        {
-            "name":"vmWare",
-            "continent":"North America",
-            "country":"USA"
-        },
-        {
-            "name":"vmWare",
-            "continent":"Asia",
-            "country":"India"
-        },
-        {
-            "name":"vmWare",
-            "continent":"Asia",
-            "country":"China"
-        },
-        {
-            "name":"vmWare",
-            "continent":"Asia",
-            "country":"Janpan"
-        }],
+{  
+    "company":[  
+       {  
+          "name":"vmWare",
+          "country":"USA",
+          "ceo":"Pat"
+       },
+       {  
+          "name":"Google",
+          "country":"USA",
+          "ceo":"Sundar"
+       },
+       {  
+          "name":"Microsoft",
+          "country":"USA",
+          "ceo":"Satya"
+       }
+    ],
+    "vmware":[  
+       {  
+          "name":"vmWare",
+          "continent":"North America",
+          "country":"USA",
+          "comment":"comment"
+       },
+       {  
+          "name":"vmWare",
+          "continent":"Asia",
+          "country":"China",
+          "comment":"comment"
+       },
+       {  
+          "name":"vmWare",
+          "continent":"Asia",
+          "country":"China",
+          "comment":"comment"
+       },
+       {  
+          "name":"vmWare",
+          "continent":"Asia",
+          "country":"Japan",
+          "comment":"comment"
+       },
+       {  
+         "name":"vmWare",
+         "continent":"Asia",
+         "country":"Sri Lanka",
+         "comment":"comment"
+      }
+    ],
     "information":"This is an example for HTML itration",
-    "signature":{
-        "footer":"Designed by :",
-        "signature":"Koushik A Makam"
+    "signature":{  
+       "footer":"Designed by :",
+       "signature":"Koushik A Makam"
     }
-}
+ }
