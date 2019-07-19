@@ -20,16 +20,20 @@ class HTMLParser():
         self.data = jsonData
         self.template = htmltemplate
 
+    def _jsonValue(self,htmlValue,index,elimater):
+        splitPrefixValue = htmlValue.split(self.getIterater())[index].replace(' ','')
+        splitPrefixList = splitPrefixValue.split(elimater)
+        return splitPrefixList[index+1].replace(' ','').lower()
+      
+
     def getIterater(self):
         return self._iterationIdentifer + self._childObjectFinder
 
     def _getParentName(self,htmlValue):
-        val = htmlValue.split(self.getIterater())[0]
-        return val.lstrip(self._templatePrefix).lower()
+        return self._jsonValue(htmlValue,0,self._templatePrefix)
     
     def _getChildName(self,htmlValue):
-        val = htmlValue.split(self.getIterater())[-1]
-        return val.rstrip(self._templateSufix).lower()
+        return self._jsonValue(htmlValue,-1,self._templateSufix)
 
     """
     This might be useful in the feature
