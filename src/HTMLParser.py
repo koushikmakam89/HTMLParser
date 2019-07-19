@@ -226,12 +226,17 @@ class HTMLParser():
     def _replaceRowData(self,rowInformation,jsonArrayName,htmlElementsList):
         popupaledRow = ""
         if jsonArrayName in self.data:
-            json = self.data[jsonArrayName]
-            for data in json:
+            for data in self.data[jsonArrayName]:
                 rowData = rowInformation
                 for element in htmlElementsList:
-                    selectorElement = element.replace(self._groupIdentifer,self._iterationIdentifer)
-                    rowData = rowData.replace(element,data[self._getChildName(selectorElement)])
+                    innerElement = element.split(self._templatePrefix)
+                    innerElementList = []
+                    for item in innerElement:
+                        if item.find(self._iterationIdentifer)>-1 and item.find(self._templateSufix)>-1:
+                            val = item.split(self._templateSufix)[0]
+                            innerElementList.append(self._templatePrefix+val+self._templateSufix)
+                    for innerElement in innerElementList:
+                        rowData = rowData.replace(innerElement,data[self._getChildName(innerElement)])
                 popupaledRow = popupaledRow  + rowData
         return popupaledRow
 
@@ -301,8 +306,8 @@ class HTMLParser():
 
         """
 
-        modifiedData = content
         doc = lh.fromstring(content)
+        modifiedData = etree.tostring(doc).decode()
         list_elements = doc.xpath(elementSelector)
         for l in list_elements:
             if l.text_content().find(self.getIterater()) > -1:
@@ -312,12 +317,13 @@ class HTMLParser():
                 li_data = []
                 for d in li_elements:
                     li_data.append(d.text_content())
-                modifiedData = modifiedData.replace(thingToReplace,
-                        self._replaceRowData(thingToReplace,
-                            self._getParentName(htmlValue = li_data[0] if len(li_data)>0 else ''),
-                            li_data))
-
-
+                
+                for li_text in li_elements:
+                    thingToReplace = etree.tostring(li_text).decode()
+                    data = self._replaceRowData(thingToReplace,
+                                self._getParentName(htmlValue = li_data[0] if len(li_data)>0 else ''),
+                                li_data)
+                    modifiedData = modifiedData.replace(thingToReplace,data)
         return modifiedData
 
     def _addFlatData(self,content,jsonData,root=''):
