@@ -292,7 +292,13 @@ class HTMLParser():
                                         next(sub for sub in td_data if sub)
                                         .replace(self._groupIdentifer,self._iterationIdentifer)),
                                 td_data)
-                    modifiedData = modifiedData.replace(thingToReplace, datarows)
+
+                    # Remove the table if the datarow content is enpty
+                    if datarows != '':
+                        modifiedData = modifiedData.replace(thingToReplace, datarows)
+                    else:
+                        modifiedData = modifiedData.replace(etree.tostring(t).decode(), '')
+
                     
         return modifiedData
 
