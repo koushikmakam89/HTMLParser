@@ -241,6 +241,7 @@ class HTMLParser():
                             innerElementList.append(self._templatePrefix+val+self._templateSufix)
                     for innerElement in innerElementList:
                         rowData = rowData.replace(innerElement,data[self._getChildName(innerElement)])
+                    rowData = self._addFlatData(rowData,data,(jsonArrayName+self._iterationIdentifer))
                 popupaledRow = popupaledRow  + rowData
         return popupaledRow
 
