@@ -240,8 +240,10 @@ class HTMLParser():
                             val = item.split(self._templateSufix)[0]
                             innerElementList.append(self._templatePrefix+val+self._templateSufix)
                     for innerElement in innerElementList:
-                        rowData = rowData.replace(innerElement,data[self._getChildName(innerElement)])
-                    rowData = self._addFlatData(rowData,data,(jsonArrayName+self._iterationIdentifer))
+                        key = self._getChildName(innerElement)
+                        if key in data.keys():
+                            rowData = rowData.replace(innerElement,str(data[key]))
+                        rowData = self._addFlatData(rowData,data,(jsonArrayName+self._iterationIdentifer))
                 popupaledRow = popupaledRow  + rowData
         return popupaledRow
 
