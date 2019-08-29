@@ -3,17 +3,20 @@
        {  
           "name":"vmWare",
           "country":"USA",
-          "ceo":"Pat"
+          "ceo":"Pat",
+          "color":"blue"
        },
        {  
           "name":"Google",
           "country":"USA",
-          "ceo":"Sundar"
+          "ceo":"Sundar",
+          "color":"blue"
        },
        {  
           "name":"Microsoft",
           "country":"USA",
-          "ceo":"Satya"
+          "ceo":"Satya",
+          "color":"red"
        }
     ],
     "vmware":[  
@@ -36,17 +39,17 @@
           "comment":"comment"
        },
        {  
-          "name":"vmWare",
-          "continent":"Asia",
-          "country":"Japan",
-          "comment":"comment"
-       },
-       {  
          "name":"vmWare",
          "continent":"Asia",
-         "country":"Sri Lanka",
+         "country":"Japan",
          "comment":"comment"
-      }
+      },
+      {  
+        "name":"vmWare",
+        "continent":"Asia",
+        "country":"Sri Lanka",
+        "comment":"comment"
+     }
     ],
     "information":"This is an example for HTML itration",
     "signature":{  
