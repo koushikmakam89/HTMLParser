@@ -142,8 +142,7 @@ class HTMLParser():
                     td_elements = lh.fromstring(oldRowValue).xpath('//td')
                     for td in td_elements:
                         index = index + 1
-                        oldDataValue = oldDataValue + \
-                            etree.tostring(td).decode()
+                        oldDataValue = oldDataValue + etree.tostring(td).decode()
 
                         # logic for rowspan
                         if coloumOrder[index] in sortOrder:
