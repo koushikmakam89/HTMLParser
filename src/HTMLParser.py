@@ -60,18 +60,24 @@ class HTMLParser():
                 popupaledRow = popupaledRow + rowData
         return popupaledRow
 
+    def innerText(self, parent):
+        for _, child in enumerate(parent.iterchildren()):
+            if child.text != None:
+                return child.text
+        return ''
+
     def _replaceGroupRowData(self, rowInformation, jsonArrayName, htmlElementsList, sortOrder):
         popupaledRow = ""
-       
+
         if jsonArrayName in self.data:
             sortedList = self.data[jsonArrayName]
 
-            reversedSortList = sortOrder[::-1] 
+            reversedSortList = sortOrder[::-1]
             for item in reversedSortList:
                 sortedList = sorted(
                     sortedList, key=lambda i: i[item], reverse=False)
 
-            #Make groups
+            # Make groups
             prevValue = ''
             groups = {}
             for item in sortedList:
@@ -81,7 +87,7 @@ class HTMLParser():
                     prevValue = item[sortOrder[0]]
                     groups[prevValue] = []
                     groups[prevValue].append(item)
-            
+
             for key in groups.keys():
                 index = 0
                 metaData = dict()
@@ -136,11 +142,19 @@ class HTMLParser():
                     td_elements = lh.fromstring(oldRowValue).xpath('//td')
                     for td in td_elements:
                         index = index + 1
-                        oldDataValue = oldDataValue + etree.tostring(td).decode()
+                        oldDataValue = oldDataValue + \
+                            etree.tostring(td).decode()
 
                         # logic for rowspan
                         if coloumOrder[index] in sortOrder:
-                            rowSpan = metaData[coloumOrder[index]][td.text]
+                            if td.text != None:
+                                rowSpan = metaData[coloumOrder[index]][td.text]
+                            else:
+                                text = self.innerText(td)
+                                if text != '':
+                                    rowSpan = metaData[coloumOrder[index]][text]
+                                else:
+                                     rowData = '1'
                             if index not in cache.keys():
                                 cache[index] = []
                             if td.text not in cache[index]:
@@ -149,10 +163,13 @@ class HTMLParser():
                                 td.set('style', 'display:none;')
                             cache[index].append(td.text)
 
-                        newDataValue = newDataValue + etree.tostring(td).decode()
-                    newRowValue = oldRowValue.replace(oldDataValue, newDataValue, 1)
-                    popupaledGorupRow = popupaledGorupRow.replace(oldRowValue, newRowValue, 1)
-                    
+                        newDataValue = newDataValue + \
+                            etree.tostring(td).decode()
+                    newRowValue = oldRowValue.replace(
+                        oldDataValue, newDataValue, 1)
+                    popupaledGorupRow = popupaledGorupRow.replace(
+                        oldRowValue, newRowValue, 1)
+
                 popupaledRow = popupaledRow + popupaledGorupRow
 
         return popupaledRow
@@ -296,6 +313,7 @@ class HTMLParser():
         htmlContent = self._addFlatData(htmlContent, self.data)
         return htmlContent
 
+
 def setIterationIdentifer(self, iterationIdentifer='[#]'):
     """
         Method to set the itearion identifer
@@ -310,6 +328,7 @@ def setIterationIdentifer(self, iterationIdentifer='[#]'):
 
     self._iterationIdentifer = iterationIdentifer
 
+
 def setGroupIdentifer(self, groupIdentifer='[#]'):
     """
         Method to set the group-by identifer
@@ -322,6 +341,7 @@ def setGroupIdentifer(self, groupIdentifer='[#]'):
     """
 
     self._groupIdentifer = groupIdentifer
+
 
 def setTemplatePattern(self, prefix='{{', sufix='}}'):
     """
