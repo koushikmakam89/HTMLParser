@@ -33,10 +33,6 @@ class HTMLParser():
     def _getChildName(self, htmlValue):
         return self._jsonValue(htmlValue, -1, self._templateSufix)
 
-    def _getChildName(self, htmlValue):
-        val = htmlValue.split(self.getIterater())[-1]
-        return val.rstrip(self._templateSufix).lower()
-
     def _replaceRowData(self, rowInformation, jsonArrayName, htmlElementsList):
         popupaledRow = ""
         if jsonArrayName in self.data:
@@ -66,6 +62,11 @@ class HTMLParser():
                 return child.text
         return ''
 
+    def strip_non_ascii(self, text):
+        ''' Returns the string without non ASCII characters'''
+        stripped = (c for c in text if 0 < ord(c) < 127)
+        return ''.join(stripped)
+
     def _replaceGroupRowData(self, rowInformation, jsonArrayName, htmlElementsList, sortOrder):
         popupaledRow = ""
 
@@ -82,7 +83,8 @@ class HTMLParser():
             groups = {}
             for item in sortedList:
                 if item[sortOrder[0]] == prevValue:
-                    groups[prevValue].append(item)
+                    if prevValue != '':
+                        groups[prevValue].append(item)
                 else:
                     prevValue = item[sortOrder[0]]
                     groups[prevValue] = []
@@ -129,7 +131,7 @@ class HTMLParser():
                             rowData = self._addFlatData(
                                 rowData, data, (jsonArrayName+self._iterationIdentifer))
 
-                    popupaledGorupRow = popupaledGorupRow + rowData
+                    popupaledGorupRow = popupaledGorupRow + etree.tostring(lh.fromstring(rowData)).decode()
 
                 # Modify the current table structure
                 cache = dict()
@@ -146,24 +148,25 @@ class HTMLParser():
 
                         # logic for rowspan
                         if coloumOrder[index] in sortOrder:
-                            if td.text != None:
-                                rowSpan = metaData[coloumOrder[index]][td.text]
-                            else:
+                            rowSpan = '1'
+                            if td.text == None:
                                 text = self.innerText(td)
-                                if text != '':
-                                    rowSpan = metaData[coloumOrder[index]][text]
-                                else:
-                                     rowData = '1'
+                            else:
+                                text = td.text
+
+                            text = self.strip_non_ascii(text)
+                            if text != '':
+                                rowSpan = metaData[coloumOrder[index]][text]
+                                
                             if index not in cache.keys():
                                 cache[index] = []
-                            if td.text not in cache[index]:
+                            if text not in cache[index]:
                                 td.set('rowspan', str(rowSpan))
                             else:
                                 td.set('style', 'display:none;')
-                            cache[index].append(td.text)
+                            cache[index].append(text)
 
-                        newDataValue = newDataValue + \
-                            etree.tostring(td).decode()
+                        newDataValue = newDataValue + etree.tostring(td).decode()
                     newRowValue = oldRowValue.replace(
                         oldDataValue, newDataValue, 1)
                     popupaledGorupRow = popupaledGorupRow.replace(
