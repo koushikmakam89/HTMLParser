@@ -147,6 +147,7 @@ class HTMLParser():
                         oldDataValue = oldDataValue + etree.tostring(td).decode()
 
                         # logic for rowspan
+                        tdText = ''
                         if coloumOrder[index] in sortOrder:
                             rowSpan = '1'
                             if td.text == None:
@@ -162,11 +163,11 @@ class HTMLParser():
                                 cache[index] = []
                             if text not in cache[index]:
                                 td.set('rowspan', str(rowSpan))
-                            else:
-                                td.set('style', 'display:none;')
+                                tdText = etree.tostring(td).decode()
                             cache[index].append(text)
-
-                        newDataValue = newDataValue + etree.tostring(td).decode()
+                        else:
+                            tdText = etree.tostring(td).decode()
+                        newDataValue = newDataValue + tdText
                     newRowValue = oldRowValue.replace(
                         oldDataValue, newDataValue, 1)
                     popupaledGorupRow = popupaledGorupRow.replace(
